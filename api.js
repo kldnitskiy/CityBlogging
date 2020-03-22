@@ -1,4 +1,4 @@
-//API
+//Не помню, чтобы использовал этот файл, но удалять жалко и страшно
 const fs = require('fs');
 const path = require('path')
 const express = require('express')

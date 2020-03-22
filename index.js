@@ -1,12 +1,17 @@
-//SERVER
-// index.js
+//Серверная часть фронтенда
+//Здесь реализовано API между бэкендом и фронтендом, а также
+//я использую некоторые функции для отрисовки шаблонов и участков вёрстки
+
+//Подключаю библиотеки
 const path = require('path')
 const express = require('express')
 const exphbs = require('express-handlebars')
 const app = express()
 const API = require('./api');
 const fs = require('fs');
+//Разделяю статические файлы от серверных
 app.use(express.static(path.join(__dirname, 'public')));
+//Настраиваю движок отрисовки и создаю сервер
 app.engine('.hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs',
@@ -16,7 +21,7 @@ app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'public/views'))
 app.listen(3000)
 
-
+//Рендерю основную страницу
 function render_api_response(data){
 }
 app.get('/', (request, response) => {
@@ -25,13 +30,14 @@ app.get('/', (request, response) => {
     
 })
 
-//TCPAPыssssssssssыыsыыыыыыssssssssss
+//TCP connector с Java сервером
 
 var net = require('net');
 var client = new net.Socket();
 var response = Array();
 let data ='';
 
+//API, работающий с Java по TCP (Использовали Hamachi)
 app.get('/api', (request, response) => { 
     let page =  response;
     request.header('Content-Type', 'application/json')
@@ -42,6 +48,8 @@ app.get('/api', (request, response) => {
     }
     
 })
+
+//Непосредственно TCP коннект
 function tcp_connect(tcp_request, res){
     client.connect(9090, '25.95.193.154', function () {
     let json_object = {
@@ -69,7 +77,7 @@ client.on('close', function () {
 });
 }
 
-//APIss
+//API для фронта, чтобы отрисовывать шаблоны
 app.get('/ajax', (request, response) => {    
     request.header('Content-Type', 'application/json')
     let api_request = request.query['request'];
@@ -80,13 +88,11 @@ app.get('/ajax', (request, response) => {
             response.json(contents)
         });
     }
-    
-//ssssssssssssssessponse.send(API.api_manager.render_template(api_request_params));
 })
 
 
 
-
+//Фильтрую данные, полученные через TCP (Всякие ASCII нафик)
 function filter_tcp(response) {
     response = response.map(String.fromCharCode);
     for (let i = 0; i < response.length; i++) {

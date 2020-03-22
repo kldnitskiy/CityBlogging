@@ -1,3 +1,4 @@
+//Отправляю запрос на получение шаблона
 function send_request(request, params){
 $.get("/ajax", { request: request, params: params })
 
@@ -7,7 +8,7 @@ $.get("/ajax", { request: request, params: params })
 
 });
 }
-
+//Получаю посты и привожу их в JSON формат
 function get_posts(request){
 $.get("/api", { request: 'get_posts'})
 
