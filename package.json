@@ -1,0 +1,16 @@
+{
+  "name": "cityblogging",
+  "version": "1.0.0",
+  "description": "hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "cityblogging"
+  },
+  "author": "arwen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "net": "^1.0.2"
+  }
+}
